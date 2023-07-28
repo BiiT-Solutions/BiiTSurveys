@@ -4,7 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --base-href /surveys/",
+    "prepare:docs": "cpx ./README.md ./dist/biit-surveys && echo \"{\\\"name\\\": \\\"`node -e \"console.log(require('./package.json').name);\"\n`\\\", \\\"version\\\": \\\"`node -e \"console.log(require('./package.json').version);\"\n`\\\"}\" > ./dist/biit-surveys/package.json",
+    "prepare:publication": "npm run build && npm run prepare:docs",
+    "publish": "npm run prepare:publication && npm publish ./dist/biit-surveys",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
