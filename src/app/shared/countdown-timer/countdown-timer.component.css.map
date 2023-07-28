@@ -1,0 +1,1 @@
+{"version":3,"sourceRoot":"","sources":["countdown-timer.component.scss"],"names":[],"mappings":"AAGA;EACE;EACA;EACA;EACA;;;AAGF;EACE;EACA;EACA;EACA;EACA,QAbU;EAcV;;;AAGF;EACE;;;AAEF;EACE;;;AAGF;EACE;IACE;IACA,QA5BY;;EA8Bd;IACE;IACA,QA/BQ;;EAiCV;IACE;IACA,QApCY;;;AAwChB;EACE;IACE;IACA,QA1CQ;;EA4CV;IACE;IACA,QA/CY","file":"countdown-timer.component.css"}

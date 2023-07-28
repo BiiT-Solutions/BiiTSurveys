@@ -1,0 +1,50 @@
+svg {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  transform: rotateY(-180deg) rotateZ(-90deg);
+}
+
+svg circle {
+  stroke-dasharray: 150px;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  stroke-width: 5px;
+  stroke: #F20D5E;
+  fill: none;
+}
+
+.start {
+  animation: countdown 5900ms linear forwards;
+}
+
+.reboot {
+  animation: restart-cd 5900ms linear forwards;
+}
+
+@keyframes restart-cd {
+  0% {
+    stroke-dashoffset: 150px;
+    stroke: #D9D9D9;
+  }
+  1% {
+    stroke-dashoffset: 0;
+    stroke: #F20D5E;
+  }
+  100% {
+    stroke-dashoffset: 150px;
+    stroke: #D9D9D9;
+  }
+}
+@keyframes countdown {
+  from {
+    stroke-dashoffset: 0;
+    stroke: #F20D5E;
+  }
+  to {
+    stroke-dashoffset: 150px;
+    stroke: #D9D9D9;
+  }
+}
+
+/*# sourceMappingURL=countdown-timer.component.css.map */

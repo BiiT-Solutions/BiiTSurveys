@@ -1,0 +1,188 @@
+$animation-timeout: 1s;
+$biit-main: #F20D5E;
+body{
+  background-color: #ededed;
+  font-size: 25px;
+  font-family: montserrat;
+  overflow: hidden;
+}
+
+.question{
+  width: 50%;
+  background-color: white;
+  border: solid 3px black;
+}
+.first-in{
+  position: absolute;
+  bottom: 60%;
+  left:25%;
+  animation-name: first-in-animation;
+  animation-duration: $animation-timeout;
+  animation-delay: 0s;
+}
+.second-in{
+  position: absolute;
+  bottom: 60%;
+  left:25%;
+  animation-name: second-in-animation;
+  animation-duration: $animation-timeout;
+  animation-delay: 0s;
+}
+.first-out{
+  position: absolute;
+  bottom: 60%;
+  left:-75%;
+  animation-name: first-out-animation;
+  animation-duration: $animation-timeout;
+  animation-delay: 0s;
+}
+.second-out {
+  position: absolute;
+  bottom: 60%;
+  left:-75%;
+  animation-name: second-out-animation;
+  animation-duration: $animation-timeout;
+  animation-delay: 0s;
+}
+.countdown {
+  position: absolute;
+  top: 15%;
+  left: -3%;
+  background-color:  white;
+}
+
+@keyframes first-in-animation{
+  0%     {left: 80%; opacity: 100;}
+  100%   {left: 25%; opacity: 100;}
+}
+@keyframes first-out-animation {
+  0%     {left: 25%; opacity: 100;}
+  100%   {left: -75%; opacity: 0;}
+}
+
+@keyframes second-out-animation {
+  from      {left: 25%; opacity: 100;}
+  to    {left: -75%; opacity: 0;}
+
+}
+@keyframes second-in-animation {
+  from     {left: 80%; opacity: 0;}
+  to   {left: 25%; opacity: 100;}
+}
+
+.question p{
+  padding: 50px 75px;
+}
+.answer{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 50%;
+  left: 25%;
+  top:50%;
+  height: 175px;
+  position: absolute;
+}
+.button{
+  width: 18%;
+  background-color: white;
+  border: solid 3px black;
+  text-align: center;
+  font-weight: bold;
+  font-size: 2.5vw;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.button:first-child{
+  color: #808080;
+}
+.button:nth-child(2){
+  color: #976879;
+}
+.button:nth-child(3){
+  color: #B9466F;
+}
+.button:nth-child(4){
+  color: #D42B69;
+}
+.button:last-child{
+  color: $biit-main;
+}
+
+.button:first-child:hover{
+  box-shadow: 0px 0px 16px #808080;
+}
+.button:nth-child(2):hover {
+  box-shadow: 0px 0px 16px #976879;
+}
+.button:nth-child(3):hover{
+  box-shadow: 0px 0px 16px #B9466F;
+}
+.button:nth-child(4):hover{
+  box-shadow: 0px 0px 16px #D42B69;
+}
+.button:last-child:hover{
+  box-shadow: 0px 0px 16px $biit-main;
+}
+
+.meter {
+  box-sizing: content-box;
+  height: 5px;
+  position: relative;
+}
+.meter > span {
+  display: block;
+  height: 100%;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 20px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: $biit-main;
+  box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3),
+  inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+.meter > span:after,
+.animate > span > span {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.2) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.2) 75%,
+      transparent 75%,
+      transparent
+  );
+  z-index: 1;
+  background-size: 50px 50px;
+  animation: move 2s linear infinite;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  overflow: hidden;
+}
+@keyframes move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}

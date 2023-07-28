@@ -1,0 +1,51 @@
+$timer: 5900ms;
+$biit-disabled: #D9D9D9;
+$biit-main: #F20D5E;
+svg {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  transform: rotateY(-180deg) rotateZ(-90deg);
+}
+
+svg circle {
+  stroke-dasharray: 150px;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  stroke-width: 5px;
+  stroke: $biit-main;
+  fill: none;
+}
+
+.start {
+  animation: countdown $timer linear forwards;
+}
+.reboot {
+  animation: restart-cd $timer linear forwards;
+}
+
+@keyframes restart-cd {
+  0% {
+    stroke-dashoffset: 150px;
+    stroke: $biit-disabled;
+  }
+  1% {
+    stroke-dashoffset: 0;
+    stroke: $biit-main;
+  }
+  100% {
+    stroke-dashoffset: 150px;
+    stroke: $biit-disabled;
+  }
+}
+
+@keyframes countdown {
+  from{
+    stroke-dashoffset: 0;
+    stroke: $biit-main;
+  }
+  to {
+    stroke-dashoffset: 150px;
+    stroke: $biit-disabled;
+  }
+}
