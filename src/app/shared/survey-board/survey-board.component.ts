@@ -86,7 +86,8 @@ export class SurveyBoardComponent implements OnInit{
   private sendSurvey(): void {
     const formResult: FormResult = new FormResult();
     this.setDefaultFormItemValues(formResult);
-    formResult.name = this.survey.label;
+    formResult.name = this.survey.name;
+    formResult.label = this.survey.label;
     formResult.version = 1;
     const category: CategoryResult = this.generateItem(this.survey.children[0].name,this.survey.children[0].label, new CategoryResult());
     category.children = this.questionsAnswered.map((answer: SurveyAnswer) => {
