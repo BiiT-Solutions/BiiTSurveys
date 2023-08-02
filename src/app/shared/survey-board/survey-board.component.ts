@@ -63,10 +63,10 @@ export class SurveyBoardComponent implements OnInit{
     }
     if (this.currentQuestion % 2) {
       this.secondQuestion = this.questions.pop();
-      this.currentAnswers = this.firstQuestion.children;
+      this.currentAnswers = this.secondQuestion.children;
     } else {
       this.firstQuestion = this.questions.pop();
-      this.currentAnswers = this.secondQuestion.children;
+      this.currentAnswers = this.firstQuestion.children;
     }
     this.currentQuestion++;
     this.startTimeout();
