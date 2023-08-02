@@ -11,6 +11,9 @@ import {CategoryResult} from "../../models/form/category-result";
 import {QuestionWithValueResult} from "../../models/form/question-with-value-result";
 import {Form} from "../../models/form/form";
 import {EventService} from "../../services/events/event-service";
+import {Constants} from "../constants";
+import {LoginRequest} from "authorization-services-lib";
+import {AuthService} from "kafka-event-structure-lib";
 
 @Component({
   selector: 'biit-survey-board',
@@ -36,10 +39,11 @@ export class SurveyBoardComponent implements OnInit{
     this.nextQuestion();
   };
 
-  constructor(private surveysService: SurveysService, private eventService: EventService) {
+  constructor(private surveysService: SurveysService, private eventService: EventService, private authService: AuthService) {
   }
 
   ngOnInit(): void {
+    this.checkAuth();
     this.surveysService.getSurvey('nca').subscribe( response => {
         this.survey = CompleteFormView.clone(response);
         this.questions = new Queue<SurveyItem>(this.survey.children[0].children);
@@ -51,6 +55,14 @@ export class SurveyBoardComponent implements OnInit{
         }
         this.startTimeout();
     });
+  }
+  private checkAuth(): void {
+    const token: string = sessionStorage.getItem(Constants.SESSION_STORAGE.AUTH_TOKEN);
+    if (!token) {
+      this.authService.login(new LoginRequest('admin@test.com', 'asd123')).subscribe( response => {
+        sessionStorage.setItem(Constants.SESSION_STORAGE.AUTH_TOKEN, response.headers.get(Constants.HEADERS.AUTHORIZATION_RESPONSE));
+      });
+    }
   }
   protected nextQuestion(answer?: SurveyItem): void {
     if (answer) {

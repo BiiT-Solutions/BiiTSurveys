@@ -5,6 +5,7 @@ export class Constants {
    }
   public static readonly HEADERS = class {
     public static readonly AUTHORIZATION: string = 'Authorization';
+    public static readonly AUTHORIZATION_RESPONSE: string = 'authorization';
   }
 
    public static readonly PATHS = class {
