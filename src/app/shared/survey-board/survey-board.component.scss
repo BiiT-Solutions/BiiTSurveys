@@ -186,3 +186,20 @@ body{
     background-position: 50px 50px;
   }
 }
+
+biit-icon {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+  > ::ng-deep svg {
+    width: 50% !important;
+    height: 50% !important;
+  }
+}
+
+.hidden {
+  display: none;
+}

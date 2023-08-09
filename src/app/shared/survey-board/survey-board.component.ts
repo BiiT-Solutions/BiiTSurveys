@@ -14,6 +14,8 @@ import {EventService} from "../../services/events/event-service";
 import {Constants} from "../constants";
 import {LoginRequest} from "authorization-services-lib";
 import {AuthService} from "kafka-event-structure-lib";
+import {BiitIconService} from 'biit-ui/icon';
+import {completeIconSet} from 'biit-icons-collection';
 
 @Component({
   selector: 'biit-survey-board',
@@ -39,7 +41,11 @@ export class SurveyBoardComponent implements OnInit{
     this.nextQuestion();
   };
 
-  constructor(private surveysService: SurveysService, private eventService: EventService, private authService: AuthService) {
+  constructor(private surveysService: SurveysService,
+              private eventService: EventService,
+              private authService: AuthService,
+              private biitIconService: BiitIconService) {
+    biitIconService.registerIcons(completeIconSet);
   }
 
   ngOnInit(): void {
