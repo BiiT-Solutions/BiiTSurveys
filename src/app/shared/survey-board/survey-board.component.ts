@@ -52,7 +52,7 @@ export class SurveyBoardComponent implements OnInit{
     this.checkAuth();
     this.surveysService.getSurvey('nca').subscribe( response => {
         this.survey = CompleteFormView.clone(response);
-        this.questions = new Queue<SurveyItem>(this.survey.children[0].children.filter(c => c.children.length < 3));
+        this.questions = new Queue<SurveyItem>(this.survey.children[0].children.filter(c => c.children));
         this.totalQuestions = this.questions.size();
         if (!this.questions.isEmpty()) {
           this.firstQuestion = this.questions.pop();
