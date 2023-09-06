@@ -18,8 +18,10 @@
   <div *ngFor="let answer of currentAnswers"
        [ngSwitch]="+answer.name"
        class="button" (click)="nextQuestion(answer)">
-    <p *ngSwitchCase="-1">👎</p>
-    <p *ngSwitchCase="1">{{currentAnswers.length === 2 ? '👍' : '☹️'}}</p>
+    <biit-icon *ngSwitchCase="-1" [name]="'cross_wide'" [pathStyle]="{fill:'#262626'}"></biit-icon>
+    <biit-icon *ngSwitchCase="1" [class.hidden]="currentAnswers.length > 2"
+               [name]="'thick'" [pathStyle]="{fill:'#f20d5e'}"></biit-icon>
+    <p *ngSwitchCase="1" [class.hidden]="currentAnswers.length === 2">☹️</p>
     <p *ngSwitchCase="2">🫤</p>
     <p *ngSwitchCase="3">😐</p>
     <p *ngSwitchCase="4">🙂</p>
