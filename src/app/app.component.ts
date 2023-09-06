@@ -12,7 +12,7 @@ import {Constants} from "./shared/constants";
 })
 export class AppComponent {
 
-  submitted = false;
+
   constructor(private rootService: RootService) {
     rootService.serverUrl = new URL(`${Environment.ROOT_URL}${Environment.KAFKA_PROXY_PATH}`);
   }

@@ -1,0 +1,57 @@
+.multi-board {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.multi-board div {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex: 1;
+}
+
+.text-box {
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  background: white;
+  border: solid 3px black;
+  min-height: 10rem;
+}
+.text-box:first-child {
+  margin-left: 1rem;
+}
+.text-box:last-child {
+  margin-right: 1rem;
+}
+
+.button {
+  margin: 0 0.5rem;
+  width: 18%;
+  background-color: white;
+  border: solid 3px black;
+  text-align: center;
+  font-weight: bold;
+  font-size: 2.5vw;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+             supported by Chrome, Edge, Opera and Firefox */
+}
+.button:first-child {
+  margin-left: 0;
+}
+.button:last-child {
+  margin-right: 0;
+}
+.button > p {
+  margin: 2rem;
+}
+
+/*# sourceMappingURL=survey-multi-text.component.css.map */

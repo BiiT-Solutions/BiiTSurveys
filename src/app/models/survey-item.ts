@@ -6,6 +6,7 @@ export class SurveyItem {
   updateTime: Date;
   name: string;
   label: string;
+  label2: string;
   hidden: boolean;
   children: SurveyItem[];
 
@@ -17,6 +18,7 @@ export class SurveyItem {
     to.updateTime = from.updateTime ? new Date(from.updateTime) : null;
     to.name = from.name;
     to.label = from.label;
+    to.label2 = from.label2;
     to.hidden = from.hidden;
     to.children = from.children ? from.children.map( child => SurveyItem.clone(child)) : [];
     return to;
