@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-single-survey-board',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./single-survey-board.component.scss']
 })
 export class SingleSurveyBoardComponent {
-  submitted = false;
+  submitted: boolean = false;
 }
