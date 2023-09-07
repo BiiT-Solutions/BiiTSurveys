@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-multi-survey-board',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./multi-survey-board.component.scss']
 })
 export class MultiSurveyBoardComponent {
-
+  submitted: boolean = false;
 }

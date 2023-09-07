@@ -20,7 +20,7 @@ import {AuthService} from "kafka-event-structure-lib";
   templateUrl: './survey-multi-text.component.html',
   styleUrls: ['./survey-multi-text.component.scss']
 })
-export class SurveyMultiTextComponent implements OnInit{
+export class SurveyMultiTextComponent implements OnInit {
   protected survey: CompleteFormView;
   protected questions: Queue<SurveyItem>;
   protected totalQuestions: number = 0;
@@ -35,9 +35,9 @@ export class SurveyMultiTextComponent implements OnInit{
 
   ngOnInit(): void {
     this.checkAuth();
-    this.surveysService.getSurvey('test').subscribe( response => {
+    this.surveysService.getSurvey('credibility').subscribe((response: CompleteFormView): void => {
       this.survey = CompleteFormView.clone(response);
-      this.questions = new Queue<SurveyItem>(this.survey.children[0].children);
+      this.questions = new Queue<SurveyItem>([...this.survey.getChildren("com.biit.webforms.persistence.entity.Question")]);
       this.totalQuestions = this.questions.size();
       if (!this.questions.isEmpty()) {
         this.currentQuestion = this.questions.pop();
@@ -46,14 +46,16 @@ export class SurveyMultiTextComponent implements OnInit{
       }
     });
   }
+
   private checkAuth(): void {
     const token: string = sessionStorage.getItem(Constants.SESSION_STORAGE.AUTH_TOKEN);
     if (!token) {
-      this.authService.login(new LoginRequest('admin@test.com', 'asd123')).subscribe( response => {
+      this.authService.login(new LoginRequest('admin@test.com', 'asd123')).subscribe(response => {
         sessionStorage.setItem(Constants.SESSION_STORAGE.AUTH_TOKEN, response.headers.get(Constants.HEADERS.AUTHORIZATION_RESPONSE));
       });
     }
   }
+
   nextQuestion(answer: SurveyItem): void {
     if (answer) {
       this.questionsAnswered.push(new SurveyAnswer(this.currentQuestion, answer));
@@ -73,16 +75,18 @@ export class SurveyMultiTextComponent implements OnInit{
     formResult.name = this.survey.name;
     formResult.label = this.survey.label;
     formResult.version = 1;
-    const category: CategoryResult = this.generateItem(this.survey.children[0].name,this.survey.children[0].label, new CategoryResult());
+    const category: CategoryResult = this.generateItem(this.survey.children[0].name, this.survey.children[0].label, new CategoryResult());
     category.children = this.questionsAnswered.map((answer: SurveyAnswer) => {
       return this.generateQuestion(answer.question.name, answer.question.label, +answer.answer.name);
     });
     formResult.children = [category];
     const customProperties = new Map<string, string>();
     customProperties.set("issuer", uuid());
+    customProperties.set("factType",  formResult.label);
     this.eventService.sendEvent(formResult, Form.name, 'SUBMITTED', customProperties, 'form');
     this.onSubmit.emit(formResult);
   }
+
   private generateQuestion(name: string, label: string, value: number): QuestionWithValueResult {
     const questionWithValueResult: QuestionWithValueResult = this.generateItem(name, label, new QuestionWithValueResult());
     this.setDefaultFormItemValues(questionWithValueResult);
@@ -90,11 +94,13 @@ export class SurveyMultiTextComponent implements OnInit{
     questionWithValueResult.answerLabels = [];
     return questionWithValueResult;
   }
+
   private setDefaultFormItemValues(formItem: FormItem): void {
     formItem.comparationId = uuid();
     formItem.creationTime = new Date();
     formItem.updateTime = new Date();
   }
+
   private generateItem<T extends FormItem>(name: string, label: string, item: T): T {
     item.name = name;
     item.label = label;

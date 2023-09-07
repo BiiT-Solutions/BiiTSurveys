@@ -1,1 +1,5 @@
-<biit-survey-multi-text></biit-survey-multi-text>
+<biit-survey-multi-text *ngIf="!submitted" (onSubmit)="submitted = true"></biit-survey-multi-text>
+<div *ngIf="submitted" class="message">
+  Survey completed successfully.
+</div>
+

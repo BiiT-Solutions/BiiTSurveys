@@ -22,7 +22,7 @@ import {completeIconSet} from 'biit-icons-collection';
   templateUrl: './survey-board.component.html',
   styleUrls: ['./survey-board.component.scss']
 })
-export class SurveyBoardComponent implements OnInit{
+export class SurveyBoardComponent implements OnInit {
 
   @Output() onSubmit: EventEmitter<FormResult> = new EventEmitter();
   protected survey: CompleteFormView;
@@ -50,26 +50,28 @@ export class SurveyBoardComponent implements OnInit{
 
   ngOnInit(): void {
     this.checkAuth();
-    this.surveysService.getSurvey('nca').subscribe( response => {
-        this.survey = CompleteFormView.clone(response);
-        this.questions = new Queue<SurveyItem>(this.survey.children[0].children.filter(c => c.children));
-        this.totalQuestions = this.questions.size();
-        if (!this.questions.isEmpty()) {
-          this.firstQuestion = this.questions.pop();
-          this.currentAnswers = this.firstQuestion.children;
-          this.currentQuestion++;
-        }
-        this.startTimeout();
+    this.surveysService.getSurvey('nca').subscribe((response: CompleteFormView): void => {
+      this.survey = CompleteFormView.clone(response);
+      this.questions = new Queue<SurveyItem>([...this.survey.getChildren("com.biit.webforms.persistence.entity.Question")]);
+      this.totalQuestions = this.questions.size();
+      if (!this.questions.isEmpty()) {
+        this.firstQuestion = this.questions.pop();
+        this.currentAnswers = this.firstQuestion.children;
+        this.currentQuestion++;
+      }
+      this.startTimeout();
     });
   }
+
   private checkAuth(): void {
     const token: string = sessionStorage.getItem(Constants.SESSION_STORAGE.AUTH_TOKEN);
     if (!token) {
-      this.authService.login(new LoginRequest('admin@test.com', 'asd123')).subscribe( response => {
+      this.authService.login(new LoginRequest('admin@test.com', 'asd123')).subscribe(response => {
         sessionStorage.setItem(Constants.SESSION_STORAGE.AUTH_TOKEN, response.headers.get(Constants.HEADERS.AUTHORIZATION_RESPONSE));
       });
     }
   }
+
   protected nextQuestion(answer?: SurveyItem): void {
     if (answer) {
       this.questionsAnswered.push(new SurveyAnswer(this.currentQuestion % 2 ? this.firstQuestion : this.secondQuestion, answer));
@@ -96,7 +98,7 @@ export class SurveyBoardComponent implements OnInit{
   }
 
   private stopTimeout(): void {
-    if(this.timeout) {
+    if (this.timeout) {
       clearTimeout(this.timeout);
     }
   }
@@ -107,16 +109,18 @@ export class SurveyBoardComponent implements OnInit{
     formResult.name = this.survey.name;
     formResult.label = this.survey.label;
     formResult.version = 1;
-    const category: CategoryResult = this.generateItem(this.survey.children[0].name,this.survey.children[0].label, new CategoryResult());
+    const category: CategoryResult = this.generateItem(this.survey.children[0].name, this.survey.children[0].label, new CategoryResult());
     category.children = this.questionsAnswered.map((answer: SurveyAnswer) => {
       return this.generateQuestion(answer.question.name, answer.question.label, +answer.answer.name);
     });
     formResult.children = [category];
     const customProperties = new Map<string, string>();
     customProperties.set("issuer", uuid());
+    customProperties.set("factType",  formResult.label);
     this.eventService.sendEvent(formResult, Form.name, 'SUBMITTED', customProperties, 'form');
     this.onSubmit.emit(formResult);
   }
+
   private generateQuestion(name: string, label: string, value: number): QuestionWithValueResult {
     const questionWithValueResult: QuestionWithValueResult = this.generateItem(name, label, new QuestionWithValueResult());
     this.setDefaultFormItemValues(questionWithValueResult);
@@ -124,11 +128,13 @@ export class SurveyBoardComponent implements OnInit{
     questionWithValueResult.answerLabels = [];
     return questionWithValueResult;
   }
+
   private setDefaultFormItemValues(formItem: FormItem): void {
     formItem.comparationId = uuid();
     formItem.creationTime = new Date();
     formItem.updateTime = new Date();
   }
+
   private generateItem<T extends FormItem>(name: string, label: string, item: T): T {
     item.name = name;
     item.label = label;
