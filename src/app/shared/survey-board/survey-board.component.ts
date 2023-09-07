@@ -116,8 +116,8 @@ export class SurveyBoardComponent implements OnInit {
     formResult.children = [category];
     const customProperties = new Map<string, string>();
     customProperties.set("issuer", uuid());
-    customProperties.set("factType",  formResult.label);
-    this.eventService.sendEvent(formResult, Form.name, 'SUBMITTED', customProperties, 'form');
+    customProperties.set("factType",  "formResult");
+    this.eventService.sendEvent(formResult, Form.name, formResult.label, 'SUBMITTED', customProperties, 'form');
     this.onSubmit.emit(formResult);
   }
 
