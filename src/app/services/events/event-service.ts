@@ -5,13 +5,19 @@ import {v4 as uuid} from "uuid";
 @Injectable({providedIn: 'root'})
 export class EventService {
 
-  constructor(private eventService: KafkaEventService) { }
+  constructor(private eventService: KafkaEventService) {
+  }
+
   public sendEvent<T>(payload: T, entityType: string, subject: string, customProperties: Map<string, string>, topic: string = undefined): void {
     const sessionId: string = uuid();
     const event: Event<T> = new Event();
     event.subject = subject;
     event.sessionId = sessionId;
     event.payload = payload;
+    event.replyTo = "BiitSurveys";
+    if ((payload as any).class) {
+      event.entityType = (payload as any).class;
+    }
     event.customPropertiesMap = customProperties;
     this.eventService.createEvent(event, topic).subscribe();
   }

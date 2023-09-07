@@ -82,6 +82,7 @@ export class SurveyMultiTextComponent implements OnInit {
     formResult.children = [category];
     const customProperties = new Map<string, string>();
     customProperties.set("issuer", uuid());
+    customProperties.set("factType",  formResult.label);
     this.eventService.sendEvent(formResult, Form.name, 'SUBMITTED', customProperties, 'form');
     this.onSubmit.emit(formResult);
   }
