@@ -8,7 +8,15 @@ const routes: Routes = [
     loadChildren: () => singleSurveyBoardModule
   },
   {
+    path: 'nca',
+    loadChildren: () => singleSurveyBoardModule
+  },
+  {
     path: 'multi',
+    loadChildren: () => import('./views/multi-survey-board/multi-survey-board.module').then(m => m.MultiSurveyBoardModule)
+  },
+  {
+    path: 'credibility',
     loadChildren: () => import('./views/multi-survey-board/multi-survey-board.module').then(m => m.MultiSurveyBoardModule)
   }
 ];
