@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MultiSurveyBoardComponent } from './multi-survey-board.component';
 import {MultiSurveyBoardRoutingModule} from "./multi-survey-board-routing.module";
 import {SurveyMultiTextModule} from "../../shared/survey-multi-text/survey-multi-text.module";
+import {SurveyBoardModule} from "../../shared/survey-board/survey-board.module";
 
 
 
@@ -13,7 +14,8 @@ import {SurveyMultiTextModule} from "../../shared/survey-multi-text/survey-multi
   imports: [
     CommonModule,
     MultiSurveyBoardRoutingModule,
-    SurveyMultiTextModule
+    SurveyMultiTextModule,
+    SurveyBoardModule
   ],
   exports: [
     MultiSurveyBoardComponent

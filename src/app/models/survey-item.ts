@@ -20,10 +20,29 @@ export class SurveyItem {
     to.label = from.label;
     to.label2 = from.label2;
     to.hidden = from.hidden;
-    to.children = from.children ? from.children.map( child => SurveyItem.clone(child)) : [];
+    to.children = from.children ? from.children.map(child => SurveyItem.clone(child)) : [];
     return to;
   }
+
   public static clone(from: SurveyItem): SurveyItem {
     return SurveyItem.copy(from, new SurveyItem());
   }
+
+  public getChildren(className: string): SurveyItem[] {
+    const children: SurveyItem[] = [];
+    this.appendChildren(className, this.children, children);
+    return children;
+  }
+
+  private appendChildren(className: string, currentChildren: SurveyItem[], filteredChildren: SurveyItem[]): void {
+    if (currentChildren) {
+      for (let child of currentChildren) {
+        if (child.class === className) {
+          filteredChildren.push(child);
+        }
+        this.appendChildren(className, child.children, filteredChildren);
+      }
+    }
+  }
+
 }
