@@ -75,11 +75,15 @@ export class SurveyMultiTextComponent implements OnInit {
     formResult.name = this.survey.name;
     formResult.label = this.survey.label;
     formResult.version = 1;
-    const category: CategoryResult = this.generateItem(this.survey.children[0].name, this.survey.children[0].label, new CategoryResult());
-    category.children = this.questionsAnswered.map((answer: SurveyAnswer) => {
-      return this.generateQuestion(answer.question.name, answer.question.label, +answer.answer.name);
+    formResult.children = this.survey.children.map(category => {
+      const categoryResult: CategoryResult = this.generateItem(category.name, category.label, new CategoryResult());
+      categoryResult.children = this.questionsAnswered
+        .filter(surveyAnswer => category.children.some(questionItem => questionItem.name === surveyAnswer.question.name))
+        .map((answer: SurveyAnswer) => {
+          return this.generateQuestion(answer.question.name, answer.question.label, +answer.answer.name);
+        });
+      return categoryResult;
     });
-    formResult.children = [category];
     const customProperties = new Map<string, string>();
     customProperties.set("issuer", uuid());
     customProperties.set("factType", "formResult");
