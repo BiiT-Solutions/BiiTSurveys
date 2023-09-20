@@ -8,11 +8,11 @@
   <div>
     <div *ngFor="let answer of currentAnswers" class="button" (click)="nextQuestion(answer)" [ngSwitch]="+answer.name" >
       <p *ngSwitchCase="-1">👎</p>
-      <p *ngSwitchCase="1">{{currentAnswers.length === 2 ? '👍' : '☹️'}}</p>
-      <p *ngSwitchCase="2">🫤</p>
-      <p *ngSwitchCase="3">😐</p>
-      <p *ngSwitchCase="4">🙂</p>
-      <p *ngSwitchCase="5">😄</p>
+      <p *ngSwitchCase="1">{{currentAnswers.length === 2 ? '👍' : '1'}}</p>
+      <p *ngSwitchCase="2">2</p>
+      <p *ngSwitchCase="3">3</p>
+      <p *ngSwitchCase="4">4</p>
+      <p *ngSwitchCase="5">5</p>
     </div>
   </div>
   <div>
