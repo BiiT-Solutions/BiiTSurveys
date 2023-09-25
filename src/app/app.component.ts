@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {RootService} from "kafka-event-structure-lib";
 import {Environment} from "../environments/environment";
-import * as customEnvironment from '../assets/environment.json';
+import customEnvironment from '../assets/environment.json';
 
 @Component({
   selector: 'app-root',
