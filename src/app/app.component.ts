@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {RootService} from "kafka-event-structure-lib";
 import {Environment} from "../environments/environment";
-import customEnvironment from '../assets/environment.json';
+import {Observable} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
@@ -11,15 +12,20 @@ import customEnvironment from '../assets/environment.json';
 export class AppComponent {
 
 
-  constructor(private rootService: RootService) {
+  constructor(private rootService: RootService, private http: HttpClient) {
 
-    console.log('-------------',customEnvironment.protocol)
-    console.log('-------------',customEnvironment.domain)
-    if (customEnvironment.protocol && customEnvironment.domain) {
-      Environment.ROOT_URL = `${customEnvironment.protocol}://${customEnvironment.domain}`;
-    }
-    console.log('------------->',Environment.ROOT_URL)
 
-    rootService.serverUrl = new URL(`${Environment.ROOT_URL}${Environment.KAFKA_PROXY_PATH}`);
+    this.getEnvironment().subscribe((_customEnvironment: any): void => {
+      if (_customEnvironment.protocol && _customEnvironment.domain) {
+        Environment.ROOT_URL = `${_customEnvironment.protocol}://${_customEnvironment.domain}`;
+      }
+
+      rootService.serverUrl = new URL(`${Environment.ROOT_URL}${Environment.KAFKA_PROXY_PATH}`);
+    });
+
+  }
+
+  getEnvironment(): Observable<any> {
+    return this.http.get<any>(`assets/environment.json`);
   }
 }
