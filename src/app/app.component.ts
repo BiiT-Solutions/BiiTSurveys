@@ -12,9 +12,7 @@ import {HttpClient} from "@angular/common/http";
 export class AppComponent {
 
 
-  constructor(private rootService: RootService, private http: HttpClient) {
-
-
+  constructor(rootService: RootService, private http: HttpClient) {
     this.getEnvironment().subscribe((_customEnvironment: any): void => {
       if (_customEnvironment.protocol && _customEnvironment.domain) {
         Environment.ROOT_URL = `${_customEnvironment.protocol}://${_customEnvironment.domain}`;

@@ -1,23 +1,31 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {AuthGuard} from "./services/auth-guard.service";
 
-const singleSurveyBoardModule = import('./views/single-survey-board/single-survey-board.module').then(m => m.SingleSurveyBoardModule);
+const login = import('./views/biit-login-page/biit-login-page.module').then(m => m.BiitLoginPageModule);
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => singleSurveyBoardModule
+    loadChildren: () => login
+  },
+  {
+    path: 'login',
+    loadChildren: () => login
   },
   {
     path: 'nca',
-    loadChildren: () => singleSurveyBoardModule
+    loadChildren: () => import('./views/single-survey-board/single-survey-board.module').then(m => m.SingleSurveyBoardModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'multi',
-    loadChildren: () => import('./views/multi-survey-board/multi-survey-board.module').then(m => m.MultiSurveyBoardModule)
+    loadChildren: () => import('./views/multi-survey-board/multi-survey-board.module').then(m => m.MultiSurveyBoardModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'credibility',
-    loadChildren: () => import('./views/multi-survey-board/multi-survey-board.module').then(m => m.MultiSurveyBoardModule)
+    loadChildren: () => import('./views/multi-survey-board/multi-survey-board.module').then(m => m.MultiSurveyBoardModule),
+    canActivate: [AuthGuard]
   }
 ];
 

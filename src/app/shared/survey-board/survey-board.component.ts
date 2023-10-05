@@ -16,6 +16,7 @@ import {LoginRequest} from "authorization-services-lib";
 import {AuthService} from "kafka-event-structure-lib";
 import {BiitIconService} from 'biit-ui/icon';
 import {completeIconSet} from 'biit-icons-collection';
+import {SessionService} from "../../services/session.service";
 
 @Component({
   selector: 'biit-survey-board',
@@ -34,7 +35,7 @@ export class SurveyBoardComponent implements OnInit {
   protected currentQuestion: number = 0;
   protected totalQuestions: number = 0;
   protected currentAnswers: SurveyItem[];
-  public timeout: number;
+  public timeout: NodeJS.Timeout;
   private questionsAnswered: SurveyAnswer[] = [];
 
   private onTimeOut: () => void = (): void => {
@@ -44,7 +45,7 @@ export class SurveyBoardComponent implements OnInit {
   constructor(private surveysService: SurveysService,
               private eventService: EventService,
               private authService: AuthService,
-              private biitIconService: BiitIconService) {
+              biitIconService: BiitIconService) {
     biitIconService.registerIcons(completeIconSet);
   }
 
@@ -119,7 +120,7 @@ export class SurveyBoardComponent implements OnInit {
       return categoryResult;
     });
     const customProperties = new Map<string, string>();
-    customProperties.set("issuer", uuid());
+    customProperties.set("issuer", SessionService.getUser().username);
     customProperties.set("factType",  "formResult");
     this.eventService.sendEvent(formResult, Form.name, formResult.label, 'SUBMITTED', customProperties, 'form');
     this.onSubmit.emit(formResult);

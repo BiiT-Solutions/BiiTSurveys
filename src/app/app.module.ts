@@ -5,6 +5,16 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HeaderInterceptor} from "./config/header-interceptor";
+import {TranslocoRootModule} from "biit-ui/i18n";
+import {registerLocaleData} from "@angular/common";
+
+import localeEn from '@angular/common/locales/en';
+import localeEs from '@angular/common/locales/es';
+import localeNL from '@angular/common/locales/nl';
+
+registerLocaleData(localeEn, 'en')
+registerLocaleData(localeEs, 'es');
+registerLocaleData(localeNL, 'nl');
 
 @NgModule({
   declarations: [
@@ -13,7 +23,8 @@ import {HeaderInterceptor} from "./config/header-interceptor";
   imports: [
     HttpClientModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    TranslocoRootModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true}

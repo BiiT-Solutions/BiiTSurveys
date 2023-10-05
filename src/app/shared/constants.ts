@@ -2,14 +2,22 @@ export class Constants {
    public static readonly SESSION_STORAGE = class {
      public static readonly SESSION: string = 'session';
      public static readonly AUTH_TOKEN: string = 'authToken';
+     public static readonly AUTH_EXPIRATION: string = 'authExp';
+     public static readonly USER: string = 'user';
    }
   public static readonly HEADERS = class {
     public static readonly AUTHORIZATION: string = 'Authorization';
     public static readonly AUTHORIZATION_RESPONSE: string = 'authorization';
+    public static readonly EXPIRES: string = 'expires';
   }
 
    public static readonly PATHS = class {
      public static readonly KAFKA_CONTEXT: string = 'kafka-proxy-backend';
      public static readonly ASSETS: string = './assets';
+     public static readonly NCA: string = '/nca';
+     public static readonly QUERY = class {
+       public static readonly EXPIRED: string = 'expired';
+       public static readonly LOGOUT: string = 'logout';
+     }
    }
 }
