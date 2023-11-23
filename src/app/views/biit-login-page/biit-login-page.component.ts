@@ -50,10 +50,18 @@ export class BiitLoginPageComponent implements OnInit {
     this.waiting = true;
     this.authService.login(new LoginRequest(login.username, login.password)).subscribe({
       next: (response: HttpResponse<User>) => {
+        const user: User = User.clone(response.body);
+        if (!this.canAccess(user)) {
+          this.waiting = false;
+          this.translocoService.selectTranslate('access_denied_permissions').subscribe(msg => {
+            this.biitSnackbarService.showNotification(msg, NotificationType.ERROR, null, 10);
+          });
+          return;
+        }
         const token: string = response.headers.get(Constants.HEADERS.AUTHORIZATION_RESPONSE);
         const expiration: number = +response.headers.get(Constants.HEADERS.EXPIRES);
         this.sessionService.setToken(token, expiration, login.remember, true);
-        this.sessionService.setUser(User.clone(response.body));
+        this.sessionService.setUser(user);
         this.router.navigate([Constants.PATHS.NCA]);
         this.waiting = false;
       },
@@ -66,6 +74,10 @@ export class BiitLoginPageComponent implements OnInit {
         this.waiting = false;
       }
     });
+  }
+
+  private canAccess(user: User): boolean {
+    return user.applicationRoles && user.applicationRoles.some(value => value.startsWith(Constants.APP.APP_PERMISSION_NAME));
   }
 
   private managePathQueries(): void {
