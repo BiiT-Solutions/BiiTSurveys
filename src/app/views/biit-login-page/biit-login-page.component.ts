@@ -2,7 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {BiitLogin} from "biit-ui/models";
 import {Constants} from "../../shared/constants";
 import {HttpResponse} from "@angular/common/http";
-import {BiitProgressBarType, BiitSnackbarService, NotificationType} from "biit-ui/info";
+import {
+  BiitProgressBarType,
+  BiitSnackbarHorizontalPosition,
+  BiitSnackbarService,
+  BiitSnackbarVerticalPosition,
+  NotificationType
+} from "biit-ui/info";
 import {TRANSLOCO_SCOPE, TranslocoService} from "@ngneat/transloco";
 import {BiitIconService} from "biit-ui/icon";
 import {completeIconSet} from "biit-icons-collection";
@@ -35,6 +41,7 @@ export class BiitLoginPageComponent implements OnInit {
               private router: Router,
               private translocoService: TranslocoService) {
     biitIconService.registerIcons(completeIconSet);
+    biitSnackbarService.setPosition(BiitSnackbarVerticalPosition.TOP, BiitSnackbarHorizontalPosition.CENTER);
   }
 
   ngOnInit(): void {
