@@ -2,7 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {BiitLogin} from "biit-ui/models";
 import {Constants} from "../../shared/constants";
 import {HttpResponse} from "@angular/common/http";
-import {BiitProgressBarType, BiitSnackbarService, NotificationType} from "biit-ui/info";
+import {
+  BiitProgressBarType,
+  BiitSnackbarHorizontalPosition,
+  BiitSnackbarService,
+  BiitSnackbarVerticalPosition,
+  NotificationType
+} from "biit-ui/info";
 import {TRANSLOCO_SCOPE, TranslocoService} from "@ngneat/transloco";
 import {BiitIconService} from "biit-ui/icon";
 import {completeIconSet} from "biit-icons-collection";
@@ -35,6 +41,7 @@ export class BiitLoginPageComponent implements OnInit {
               private router: Router,
               private translocoService: TranslocoService) {
     biitIconService.registerIcons(completeIconSet);
+    biitSnackbarService.setPosition(BiitSnackbarVerticalPosition.TOP, BiitSnackbarHorizontalPosition.CENTER);
   }
 
   ngOnInit(): void {
@@ -50,10 +57,18 @@ export class BiitLoginPageComponent implements OnInit {
     this.waiting = true;
     this.authService.login(new LoginRequest(login.username, login.password)).subscribe({
       next: (response: HttpResponse<User>) => {
+        const user: User = User.clone(response.body);
+        if (!this.canAccess(user)) {
+          this.waiting = false;
+          this.translocoService.selectTranslate('access_denied_permissions').subscribe(msg => {
+            this.biitSnackbarService.showNotification(msg, NotificationType.ERROR, null, 10);
+          });
+          return;
+        }
         const token: string = response.headers.get(Constants.HEADERS.AUTHORIZATION_RESPONSE);
         const expiration: number = +response.headers.get(Constants.HEADERS.EXPIRES);
         this.sessionService.setToken(token, expiration, login.remember, true);
-        this.sessionService.setUser(User.clone(response.body));
+        this.sessionService.setUser(user);
         this.router.navigate([Constants.PATHS.NCA]);
         this.waiting = false;
       },
@@ -66,6 +81,10 @@ export class BiitLoginPageComponent implements OnInit {
         this.waiting = false;
       }
     });
+  }
+
+  private canAccess(user: User): boolean {
+    return user.applicationRoles && user.applicationRoles.some(value => value.startsWith(Constants.APP.APP_PERMISSION_NAME));
   }
 
   private managePathQueries(): void {

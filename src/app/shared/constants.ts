@@ -1,5 +1,9 @@
 export class Constants {
-   public static readonly SESSION_STORAGE = class {
+  public static readonly APP = class {
+    public static readonly APP_PERMISSION_NAME: string = 'BIITSURVEYS';
+  }
+
+  public static readonly SESSION_STORAGE = class {
      public static readonly SESSION: string = 'session';
      public static readonly AUTH_TOKEN: string = 'authToken';
      public static readonly AUTH_EXPIRATION: string = 'authExp';

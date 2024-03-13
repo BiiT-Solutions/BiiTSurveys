@@ -14,6 +14,7 @@ import {EventService} from "../../services/events/event-service";
 import {Constants} from "../constants";
 import {LoginRequest} from "authorization-services-lib";
 import {AuthService} from "kafka-event-structure-lib";
+import {SessionService} from "../../services/session.service";
 
 @Component({
   selector: 'biit-survey-multi-text',
@@ -85,7 +86,7 @@ export class SurveyMultiTextComponent implements OnInit {
       return categoryResult;
     });
     const customProperties = new Map<string, string>();
-    customProperties.set("issuer", uuid());
+    customProperties.set("issuer", SessionService.getUser().username);
     customProperties.set("factType", "formResult");
     this.eventService.sendEvent(formResult, Form.name, formResult.label, 'SUBMITTED', customProperties, 'form');
     this.onSubmit.emit(formResult);

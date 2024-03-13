@@ -11,6 +11,7 @@ import {registerLocaleData} from "@angular/common";
 import localeEn from '@angular/common/locales/en';
 import localeEs from '@angular/common/locales/es';
 import localeNL from '@angular/common/locales/nl';
+import {BiitSnackbarModule} from "biit-ui/info";
 
 registerLocaleData(localeEn, 'en')
 registerLocaleData(localeEs, 'es');
@@ -25,6 +26,7 @@ registerLocaleData(localeNL, 'nl');
     BrowserModule,
     AppRoutingModule,
     TranslocoRootModule,
+    BiitSnackbarModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true}
