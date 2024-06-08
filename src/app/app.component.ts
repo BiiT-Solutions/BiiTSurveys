@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import { KafkaEventStructureRootService } from "kafka-event-structure-lib";
 import {Environment} from "../environments/environment";
-import {HttpClient} from "@angular/common/http";
 import {BiitSnackbarHorizontalPosition, BiitSnackbarService, BiitSnackbarVerticalPosition} from "biit-ui/info";
+import {TranslocoService} from "@ngneat/transloco";
 
 @Component({
   selector: 'app-root',
@@ -12,8 +12,11 @@ import {BiitSnackbarHorizontalPosition, BiitSnackbarService, BiitSnackbarVertica
 export class AppComponent {
 
 
-  constructor(rootService: KafkaEventStructureRootService, private http: HttpClient, private snackbarService: BiitSnackbarService) {
+  constructor(rootService: KafkaEventStructureRootService,
+              transloco: TranslocoService,
+              snackbarService: BiitSnackbarService) {
     rootService.serverUrl = new URL(`${Environment.ROOT_URL}${Environment.KAFKA_PROXY_PATH}`);
     snackbarService.setPosition(BiitSnackbarVerticalPosition.TOP, BiitSnackbarHorizontalPosition.CENTER);
+    transloco.setActiveLang(navigator.language.split('-')[0]);
   }
 }

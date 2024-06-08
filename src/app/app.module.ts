@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {isDevMode, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -12,6 +12,7 @@ import localeEn from '@angular/common/locales/en';
 import localeEs from '@angular/common/locales/es';
 import localeNL from '@angular/common/locales/nl';
 import {BiitSnackbarModule} from "biit-ui/info";
+import {TRANSLOCO_CONFIG, translocoConfig} from "@ngneat/transloco";
 
 registerLocaleData(localeEn, 'en')
 registerLocaleData(localeEs, 'es');
@@ -29,6 +30,16 @@ registerLocaleData(localeNL, 'nl');
     BiitSnackbarModule,
   ],
   providers: [
+    {
+      provide: TRANSLOCO_CONFIG,
+      useValue: translocoConfig({
+        availableLangs: ['en', 'es', 'nl'],
+        defaultLang: 'en',
+        fallbackLang: 'en',
+        reRenderOnLangChange: true,
+        prodMode: !isDevMode()
+      })
+    },
     {provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
