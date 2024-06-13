@@ -25,6 +25,7 @@
     "@angular/router": "^15.2.0",
     "@ngneat/transloco": "^4.3.0",
     "kafka-event-structure-lib": "latest",
+    "user-manager-structure-lib": "latest",
     "authorization-services-lib": "latest",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
