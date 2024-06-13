@@ -1,6 +1,6 @@
 {
   "name": "biit-surveys",
-  "version": "0.0.46",
+  "version": "0.0.47",
   "scripts": {
     "ng": "ng",
     "start": "npm run prepare:translations && ng serve",
