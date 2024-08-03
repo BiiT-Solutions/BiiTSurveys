@@ -21,6 +21,7 @@ export class Constants {
      public static readonly NCA: string = '/nca';
      public static readonly QUERY = class {
        public static readonly EXPIRED: string = 'expired';
+       public static readonly REDIRECT: string = 'r';
        public static readonly LOGOUT: string = 'logout';
      }
    }

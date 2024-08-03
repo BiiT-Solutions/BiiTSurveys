@@ -13,7 +13,7 @@ import {TRANSLOCO_SCOPE, TranslocoService} from "@ngneat/transloco";
 import {BiitIconService} from "biit-ui/icon";
 import {completeIconSet} from "biit-icons-collection";
 import {SessionService} from "../../services/session.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Route, Router} from "@angular/router";
 import {LoginRequest, User} from "authorization-services-lib";
 import {AuthService} from "kafka-event-structure-lib";
 import {UserService} from "user-manager-structure-lib";
@@ -71,7 +71,16 @@ export class BiitLoginPageComponent implements OnInit {
         const expiration: number = +response.headers.get(Constants.HEADERS.EXPIRES);
         this.sessionService.setToken(token, expiration, login.remember, true);
         this.sessionService.setUser(user);
-        this.router.navigate([Constants.PATHS.NCA]);
+
+        this.activateRoute.queryParams.subscribe(params => {
+          if (params[Constants.PATHS.QUERY.REDIRECT] !== undefined) {
+            const routerLink = params[Constants.PATHS.QUERY.REDIRECT];
+            this.router.navigate([routerLink]);
+          } else {
+            this.router.navigate([Constants.PATHS.NCA]);
+          }
+        });
+
         this.waiting = false;
       },
       error: (response: HttpResponse<void>) => {
