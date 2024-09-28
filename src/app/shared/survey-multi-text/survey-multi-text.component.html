@@ -1,0 +1,21 @@
+<div class="meter">
+  <span [style.width.%]="totalAsked/totalQuestions*100"></span>
+</div>
+<div class="multi-board">
+  <div>
+    <div class="text-box" [innerHTML]="currentQuestion?.label"></div>
+  </div>
+  <div>
+    <div *ngFor="let answer of currentAnswers" class="button" (click)="nextQuestion(answer)" [ngSwitch]="+answer.name" >
+      <p *ngSwitchCase="-1">👎</p>
+      <p *ngSwitchCase="1">{{currentAnswers.length === 2 ? '👍' : '1'}}</p>
+      <p *ngSwitchCase="2">2</p>
+      <p *ngSwitchCase="3">3</p>
+      <p *ngSwitchCase="4">4</p>
+      <p *ngSwitchCase="5">5</p>
+    </div>
+  </div>
+  <div>
+    <div class="text-box" [innerHTML]="currentQuestion?.label2"></div>
+  </div>
+</div>

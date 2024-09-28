@@ -1,14 +1,16 @@
 {
   "name": "biit-surveys",
-  "version": "0.0.1",
+  "version": "0.0.90",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build --base-href /surveys/",
+    "start": "npm run prepare:translations && ng serve",
+    "build": "npm run prepare:translations && ng build --output-hashing=all --configuration docker --base-href /biit-surveys/",
     "prepare:docs": "cpx ./README.md ./dist/biit-surveys && echo \"{\\\"name\\\": \\\"`node -e \"console.log(require('./package.json').name);\"\n`\\\", \\\"version\\\": \\\"`node -e \"console.log(require('./package.json').version);\"\n`\\\"}\" > ./dist/biit-surveys/package.json",
     "prepare:publication": "npm run build && npm run prepare:docs",
+    "clean:translations": "del-cli --force ./src/assets/i18n/biit-ui/",
+    "prepare:translations": "npm run clean:translations && cpx './node_modules/biit-ui/assets/i18n/**/*.json' './src/assets/i18n/biit-ui/'",
     "publish": "npm run prepare:publication && npm publish ./dist/biit-surveys",
-    "watch": "ng build --watch --configuration development",
+    "watch": "npm run prepare:translations && ng build --output-hashing=all --watch --configuration development",
     "test": "ng test"
   },
   "private": true,
@@ -21,11 +23,16 @@
     "@angular/platform-browser": "^15.2.0",
     "@angular/platform-browser-dynamic": "^15.2.0",
     "@angular/router": "^15.2.0",
+    "@ngneat/transloco": "^4.3.0",
     "kafka-event-structure-lib": "latest",
+    "user-manager-structure-lib": "latest",
+    "authorization-services-lib": "latest",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "uuid": "^9.0.0",
-    "zone.js": "~0.12.0"
+    "zone.js": "~0.12.0",
+    "biit-ui": "latest",
+    "biit-icons-collection": "latest"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.2.0",
@@ -36,6 +43,7 @@
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "cpx": "^1.5.0",
+    "del-cli": "^5.0.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",

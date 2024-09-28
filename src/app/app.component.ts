@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import {RootService} from "kafka-event-structure-lib";
+import {Component} from '@angular/core';
+import { KafkaEventStructureRootService } from "kafka-event-structure-lib";
 import {Environment} from "../environments/environment";
-import {Constants} from "./shared/constants";
-
+import {BiitSnackbarHorizontalPosition, BiitSnackbarService, BiitSnackbarVerticalPosition} from "biit-ui/info";
+import {TranslocoService} from "@ngneat/transloco";
 
 @Component({
   selector: 'app-root',
@@ -11,17 +11,12 @@ import {Constants} from "./shared/constants";
 })
 export class AppComponent {
 
-  submitted = false;
-  constructor(private rootService: RootService) {
-    rootService.serverUrl = new URL(`${Environment.ROOT_URL}${Environment.KAFKA_PROXY_PATH}`);
-    this.checkAuth();
-  }
 
-  private checkAuth(): void {
-    const token: string = sessionStorage.getItem(Constants.SESSION_STORAGE.AUTH_TOKEN);
-    if (!token) {
-      const newToken: string = window.prompt('Insert your token');
-      sessionStorage.setItem(Constants.SESSION_STORAGE.AUTH_TOKEN, newToken);
-    }
+  constructor(rootService: KafkaEventStructureRootService,
+              transloco: TranslocoService,
+              snackbarService: BiitSnackbarService) {
+    rootService.serverUrl = new URL(`${Environment.ROOT_URL}${Environment.KAFKA_PROXY_PATH}`);
+    snackbarService.setPosition(BiitSnackbarVerticalPosition.TOP, BiitSnackbarHorizontalPosition.CENTER);
+    transloco.setActiveLang(navigator.language.split('-')[0]);
   }
 }
