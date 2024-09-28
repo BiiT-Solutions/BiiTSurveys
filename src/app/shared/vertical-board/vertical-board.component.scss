@@ -1,0 +1,74 @@
+.scoreboard {
+  display: flex;
+  flex-direction: row;
+  font-size: xx-large;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  padding-left: 1rem;
+  transition: all 0.3s;
+}
+
+.vertical-view {
+  margin: 1rem;
+  height: calc(100vh - 2rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.question {
+  margin-top: 1rem;
+}
+
+.answers {
+  flex-grow: 1;
+  margin-top: 2rem;
+  display: flow-root;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.answer {
+  border: 1px solid #aaa;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.total-pages {
+  font-size: 1rem;
+  color: #666;
+  justify-content: inherit;
+  align-items: end;
+  align-content: end;
+  padding-bottom: 0.36rem;
+}
+
+.title {
+  font-size: 0.5rem;
+  font-weight: bold;
+  color: #666;
+}
+
+.answered {
+  animation: selection 300ms;
+  animation-fill-mode: forwards;
+}
+
+.ripple {
+  background-position: center;
+  transition: background 0.8s;
+}
+
+@keyframes selection {
+  to {background:  #F20D5E radial-gradient(circle, transparent 1%, #F20D5E 1%) center/1%;}
+  from {  background:  transparent radial-gradient(circle, transparent 1%, rgba(242, 13, 94, 0) 1%) center/15000%;}
+}
+
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}

@@ -1,4 +1,6 @@
-<biit-survey-board *ngIf="!submitted" (onSubmit)="submitted = true"></biit-survey-board>
+<!--TODO(jnavalon): before complete branch this must be integrated properly -->
+<!--<biit-survey-board *ngIf="!submitted" (onSubmit)="submitted = true"></biit-survey-board>-->
+<biit-vertical-board *ngIf="!submitted" (onSubmit)="submitted = true"/>
 <div *ngIf="submitted" class="message">
   Survey completed successfully.
 </div>
