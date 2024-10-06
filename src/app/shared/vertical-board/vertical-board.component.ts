@@ -62,15 +62,19 @@ export class VerticalBoardComponent implements OnInit {
   }
 
   protected onAnswered(answer: SurveyItem) {
+    if (this.currentQuestion._selected) {
+      return;
+    }
     if (answer) {
       if (answer._selected) {
         return;
       }
+      this.currentQuestion._selected = true;
       this.questionsAnswered.push(new SurveyAnswer(this.currentQuestion, answer));
       answer._selected = true;
     }
     if (!this.questions.isEmpty()) {
-      setTimeout(() => this.nextQuestion(), 400);
+      setTimeout(() => this.nextQuestion(), 1000);
     }
   }
 
