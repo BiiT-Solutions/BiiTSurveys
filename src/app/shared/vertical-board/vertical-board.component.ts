@@ -41,6 +41,9 @@ export class VerticalBoardComponent implements OnInit {
 
 
   ngOnInit(): void {
+    const vh = window.innerHeight * 0.01;
+// Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
     this.checkAuth();
     this.surveysService.getSurvey('nca').subscribe((response: CompleteFormView): void => {
       this.survey = CompleteFormView.clone(response);

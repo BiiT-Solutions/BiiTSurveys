@@ -25,7 +25,7 @@
   </div>
   <div class="answers">
     <div *ngFor="let answer of currentAnswers" (click)="onAnswered(answer)"
-         class="answer ripple" [class.answered]="answer._selected" (touchstart)="addRippleClass($event)">
+         class="answer ripple prevent-select" [class.answered]="answer._selected" (touchstart)="addRippleClass($event)">
       <span>{{answer.label}}</span>
     </div>
   </div>
