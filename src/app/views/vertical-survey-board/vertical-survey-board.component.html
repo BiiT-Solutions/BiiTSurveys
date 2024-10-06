@@ -1,0 +1,6 @@
+<div class="vertical-board">
+  <biit-vertical-board *ngIf="!submitted" (onSubmit)="submitted = true"/>
+</div>
+<div *ngIf="submitted" class="message">
+  Survey completed successfully.
+</div>
