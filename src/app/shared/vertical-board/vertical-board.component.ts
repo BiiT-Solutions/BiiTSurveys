@@ -88,11 +88,7 @@ export class VerticalBoardComponent implements OnInit {
       this.questionsAnswered.push(new SurveyAnswer(this.currentQuestion, answer));
       answer._selected = true;
     }
-    if (!this.questions.isEmpty()) {
-      setTimeout(() => this.nextQuestion(), 1000);
-    } else {
-      this.submit();
-    }
+    setTimeout(() => !this.questions.isEmpty() ?  this.nextQuestion() : this.submit(), 1000);
   }
 
   private submit(): void {
