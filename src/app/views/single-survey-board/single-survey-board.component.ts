@@ -6,5 +6,5 @@ import {Component} from '@angular/core';
   styleUrls: ['./single-survey-board.component.scss']
 })
 export class SingleSurveyBoardComponent {
-  submitted: boolean = false;
+  protected submitted: boolean = false;
 }

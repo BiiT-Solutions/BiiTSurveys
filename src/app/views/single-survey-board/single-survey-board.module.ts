@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SingleSurveyBoardComponent } from './single-survey-board.component';
 import {SurveyBoardModule} from "../../shared/survey-board/survey-board.module";
 import {SingleSurveyBoardRoutingModule} from "./single-survey-board-routing.module";
+import {VerticalBoardModule} from "../../shared/vertical-board/vertical-board.module";
 
 
 
@@ -10,11 +11,12 @@ import {SingleSurveyBoardRoutingModule} from "./single-survey-board-routing.modu
   declarations: [
     SingleSurveyBoardComponent
   ],
-  imports: [
-    CommonModule,
-    SurveyBoardModule,
-    SingleSurveyBoardRoutingModule
-  ], exports: [
+    imports: [
+        CommonModule,
+        SurveyBoardModule,
+        SingleSurveyBoardRoutingModule,
+        VerticalBoardModule
+    ], exports: [
     SingleSurveyBoardComponent
   ]
 })

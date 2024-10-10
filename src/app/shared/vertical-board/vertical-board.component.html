@@ -1,0 +1,36 @@
+<div class="vertical-view" *ngIf="survey">
+  <div class="title">
+    {{survey.label}}
+  </div>
+  <div>
+    <div>
+      <div class="scoreboard">
+        <div class="current-page">
+          {{currentQuestionIndex}}
+        </div>
+        <div class="total-pages">
+          {{'/' + totalQuestions}}
+        </div>
+      </div>
+    </div>
+    <biit-progress-bar
+      [type]="BiitProgressBarType.DETERMINATE"
+      [value]="Math.round(currentQuestionIndex/totalQuestions*100)"
+    ></biit-progress-bar>
+  </div>
+  <div class="question">
+    <div *ngIf="currentQuestion.translation" class="question-label">
+      {{'form.' + currentQuestion.translation | transloco}}
+    </div>
+    <div *ngIf="!currentQuestion.translation" class="question-label">
+      {{currentQuestion.label}}
+    </div>
+  </div>
+  <div class="answers">
+    <div *ngFor="let answer of currentAnswers" (click)="onAnswered(answer)"
+         class="answer ripple prevent-select" [class.answered]="answer._selected" (touchstart)="addRippleClass($event)">
+      <span *ngIf="!answer.translation">{{answer.label}}</span>
+      <span *ngIf="answer.translation">{{'form.' + answer.translation | transloco}}</span>
+    </div>
+  </div>
+</div>

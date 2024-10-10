@@ -1,1 +1,7 @@
-{"version":3,"sourceRoot":"","sources":["multi-survey-board.component.scss"],"names":[],"mappings":"AAAA;EACE;EACA;EACA","file":"multi-survey-board.component.css"}
+{
+"version": 3,
+"mappings": "AAAA,QAAS;EACP,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,MAAM;EACvB,WAAW,EAAE,GAAG",
+"sources": ["multi-survey-board.component.scss"],
+"names": [],
+"file": "multi-survey-board.component.css"
+}

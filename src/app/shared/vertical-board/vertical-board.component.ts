@@ -1,67 +1,69 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CompleteFormView} from "../../models/complete-form-view";
-import {SurveysService} from "../../services/surveys.service";
-import {SurveyItem} from "../../models/survey-item";
+import {BiitProgressBarType} from "biit-ui/info";
 import {Queue} from "../../utils/queue";
-import {SurveyAnswer} from "../../models/survey-answer";
-import {FormItem} from "../../models/form/form-item";
-import {v4 as uuid} from "uuid";
+import {SurveyItem} from "../../models/survey-item";
 import {FormResult} from "../../models/form/form-result";
-import {CategoryResult} from "../../models/form/category-result";
-import {QuestionWithValueResult} from "../../models/form/question-with-value-result";
-import {Form} from "../../models/form/form";
-import {EventService} from "../../services/events/event-service";
 import {Constants} from "../constants";
 import {LoginRequest} from "authorization-services-lib";
+import {SurveysService} from "../../services/surveys.service";
+import {EventService} from "../../services/events/event-service";
 import {AuthService} from "kafka-event-structure-lib";
-import {BiitIconService} from 'biit-ui/icon';
-import {completeIconSet} from 'biit-icons-collection';
+import {BiitIconService} from "biit-ui/icon";
+import {completeIconSet} from "biit-icons-collection";
+import {SurveyAnswer} from "../../models/survey-answer";
 import {SessionService} from "../../services/session.service";
+import {Form} from "../../models/form/form";
 import {FormFormatter} from "../../utils/form-formatter";
+import {TRANSLOCO_SCOPE, TranslocoService} from "@ngneat/transloco";
 
 @Component({
-  selector: 'biit-survey-board',
-  templateUrl: './survey-board.component.html',
-  styleUrls: ['./survey-board.component.scss']
+  selector: 'biit-vertical-board',
+  templateUrl: './vertical-board.component.html',
+  styleUrls: ['./vertical-board.component.scss'],
+  providers: [
+    {
+      provide: TRANSLOCO_SCOPE,
+      multi:true,
+      useValue: {scope: 'forms/haw', alias: 'form'}
+    }
+  ],
 })
-export class SurveyBoardComponent implements OnInit {
-
+export class VerticalBoardComponent implements OnInit {
   @Output() onSubmit: EventEmitter<FormResult> = new EventEmitter();
   protected survey: CompleteFormView;
   protected questions: Queue<SurveyItem>;
-
-  protected firstQuestion: SurveyItem;
-  protected secondQuestion: SurveyItem;
-
-  protected currentQuestion: number = 0;
-  protected totalQuestions: number = 0;
+  protected totalQuestions: number;
+  protected currentQuestion: SurveyItem;
+  protected currentQuestionIndex: number = 0;
   protected currentAnswers: SurveyItem[];
-  public timeout: NodeJS.Timeout;
+
   private questionsAnswered: SurveyAnswer[] = [];
 
-  private onTimeOut: () => void = (): void => {
-    this.nextQuestion();
-  };
+  protected readonly BiitProgressBarType = BiitProgressBarType;
+  protected readonly Math: Math = Math;
 
   constructor(private surveysService: SurveysService,
               private eventService: EventService,
               private authService: AuthService,
+              private transloco: TranslocoService,
               biitIconService: BiitIconService) {
     biitIconService.registerIcons(completeIconSet);
   }
 
+
   ngOnInit(): void {
+    const vh = window.innerHeight * 0.01;
+// Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
     this.checkAuth();
-    this.surveysService.getSurvey('nca').subscribe((response: CompleteFormView): void => {
+    this.surveysService.getSurvey('HAW').subscribe((response: CompleteFormView): void => {
       this.survey = CompleteFormView.clone(response);
       this.questions = new Queue<SurveyItem>([...this.survey.getChildren("com.biit.webforms.persistence.entity.Question")]);
       this.totalQuestions = this.questions.size();
       if (!this.questions.isEmpty()) {
-        this.firstQuestion = this.questions.pop();
-        this.currentAnswers = this.firstQuestion.children;
-        this.currentQuestion++;
+        this.nextQuestion();
       }
-      this.startTimeout();
     });
   }
 
@@ -74,38 +76,22 @@ export class SurveyBoardComponent implements OnInit {
     }
   }
 
-  protected nextQuestion(answer?: SurveyItem): void {
-    if (answer) {
-      this.questionsAnswered.push(new SurveyAnswer(this.currentQuestion % 2 ? this.firstQuestion : this.secondQuestion, answer));
-    }
-    if (this.questions.size() === 0) {
-      this.stopTimeout();
-      this.sendSurvey();
+  protected onAnswered(answer: SurveyItem) {
+    if (this.currentQuestion._selected) {
       return;
     }
-    if (this.currentQuestion % 2) {
-      this.secondQuestion = this.questions.pop();
-      this.currentAnswers = this.secondQuestion.children;
-    } else {
-      this.firstQuestion = this.questions.pop();
-      this.currentAnswers = this.firstQuestion.children;
+    if (answer) {
+      if (answer._selected) {
+        return;
+      }
+      this.currentQuestion._selected = true;
+      this.questionsAnswered.push(new SurveyAnswer(this.currentQuestion, answer));
+      answer._selected = true;
     }
-    this.currentQuestion++;
-    this.startTimeout();
+    setTimeout(() => !this.questions.isEmpty() ?  this.nextQuestion() : this.submit(), 1000);
   }
 
-  private startTimeout(): void {
-    this.stopTimeout();
-    this.timeout = setTimeout(this.onTimeOut, 6000);
-  }
-
-  private stopTimeout(): void {
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
-  }
-
-  private sendSurvey(): void {
+  private submit(): void {
     const formResult: FormResult = FormFormatter.getFormResultFromCompleteFormView(this.survey, this.questionsAnswered);
     const customProperties = new Map<string, string>();
     customProperties.set("issuer", SessionService.getUser().username);
@@ -114,5 +100,14 @@ export class SurveyBoardComponent implements OnInit {
     this.onSubmit.emit(formResult);
   }
 
+  private nextQuestion(): void {
+    this.currentQuestion = this.questions.pop();
+    this.currentAnswers = this.currentQuestion.children;
+    this.currentQuestionIndex++;
+  }
 
+  protected addRippleClass(event: TouchEvent) {
+    const eventTarget: HTMLElement = event.target as HTMLElement;
+    eventTarget.classList.add('ripple-active');
+  }
 }
