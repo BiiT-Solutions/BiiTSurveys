@@ -12,6 +12,11 @@ import {AuthService} from "kafka-event-structure-lib";
 import {BiitIconService} from "biit-ui/icon";
 import {completeIconSet} from "biit-icons-collection";
 import {SurveyAnswer} from "../../models/survey-answer";
+import {CategoryResult} from "../../models/form/category-result";
+import {SessionService} from "../../services/session.service";
+import {Form} from "../../models/form/form";
+import {FormFormatter} from "../../utils/form-formatter";
+import {TranslocoService} from "@ngneat/transloco";
 
 @Component({
   selector: 'biit-vertical-board',
@@ -35,6 +40,7 @@ export class VerticalBoardComponent implements OnInit {
   constructor(private surveysService: SurveysService,
               private eventService: EventService,
               private authService: AuthService,
+              private transloco: TranslocoService,
               biitIconService: BiitIconService) {
     biitIconService.registerIcons(completeIconSet);
   }
@@ -45,7 +51,7 @@ export class VerticalBoardComponent implements OnInit {
 // Then we set the value in the --vh custom property to the root of the document
     document.documentElement.style.setProperty('--vh', `${vh}px`);
     this.checkAuth();
-    this.surveysService.getSurvey('nca').subscribe((response: CompleteFormView): void => {
+    this.surveysService.getSurvey('HAW').subscribe((response: CompleteFormView): void => {
       this.survey = CompleteFormView.clone(response);
       this.questions = new Queue<SurveyItem>([...this.survey.getChildren("com.biit.webforms.persistence.entity.Question")]);
       this.totalQuestions = this.questions.size();
@@ -78,7 +84,18 @@ export class VerticalBoardComponent implements OnInit {
     }
     if (!this.questions.isEmpty()) {
       setTimeout(() => this.nextQuestion(), 1000);
+    } else {
+      this.submit();
     }
+  }
+
+  private submit(): void {
+    const formResult: FormResult = FormFormatter.getFormResultFromCompleteFormView(this.survey, this.questionsAnswered);
+    const customProperties = new Map<string, string>();
+    customProperties.set("issuer", SessionService.getUser().username);
+    customProperties.set("factType",  "formResult");
+    this.eventService.sendEvent(formResult, Form.name, formResult.label, 'SUBMITTED', customProperties, 'form');
+    this.onSubmit.emit(formResult);
   }
 
   private nextQuestion(): void {

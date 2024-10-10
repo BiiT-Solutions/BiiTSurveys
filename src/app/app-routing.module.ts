@@ -18,7 +18,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'hwm',
+    path: 'haw',
     loadChildren: () => import('./views/vertical-survey-board/vertical-survey-board.module').then(m => m.VerticalSurveyBoardModule),
     canActivate: [AuthGuard]
   },
