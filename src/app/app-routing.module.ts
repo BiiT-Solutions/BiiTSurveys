@@ -18,6 +18,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'haw',
+    loadChildren: () => import('./views/vertical-survey-board/vertical-survey-board.module').then(m => m.VerticalSurveyBoardModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'multi',
     loadChildren: () => import('./views/multi-survey-board/multi-survey-board.module').then(m => m.MultiSurveyBoardModule),
     canActivate: [AuthGuard]

@@ -51,5 +51,12 @@ body {
     background-position: 0 0; }
   100% {
     background-position: 50px 50px; } }
+.prevent-select {
+  -webkit-user-select: none;
+  /* Safari */
+  -ms-user-select: none;
+  /* IE 10 and IE 11 */
+  user-select: none;
+  /* Standard syntax */ }
 
 /*# sourceMappingURL=styles.css.map */

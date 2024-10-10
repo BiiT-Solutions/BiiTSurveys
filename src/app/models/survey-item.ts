@@ -9,6 +9,8 @@ export class SurveyItem {
   label2: string;
   hidden: boolean;
   children: SurveyItem[];
+  translation: string;
+  _selected: boolean = false;
 
   public static copy(from: SurveyItem, to: SurveyItem): SurveyItem {
     to.class = from.class;
@@ -20,6 +22,8 @@ export class SurveyItem {
     to.label = from.label;
     to.label2 = from.label2;
     to.hidden = from.hidden;
+    to.translation = from.translation;
+    to._selected = from._selected;
     to.children = from.children ? from.children.map(child => SurveyItem.clone(child)) : [];
     return to;
   }
