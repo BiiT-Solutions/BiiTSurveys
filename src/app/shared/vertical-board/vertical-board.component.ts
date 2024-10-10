@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CompleteFormView} from "../../models/complete-form-view";
 import {BiitProgressBarType} from "biit-ui/info";
 import {Queue} from "../../utils/queue";
@@ -12,16 +12,22 @@ import {AuthService} from "kafka-event-structure-lib";
 import {BiitIconService} from "biit-ui/icon";
 import {completeIconSet} from "biit-icons-collection";
 import {SurveyAnswer} from "../../models/survey-answer";
-import {CategoryResult} from "../../models/form/category-result";
 import {SessionService} from "../../services/session.service";
 import {Form} from "../../models/form/form";
 import {FormFormatter} from "../../utils/form-formatter";
-import {TranslocoService} from "@ngneat/transloco";
+import {TRANSLOCO_SCOPE, TranslocoService} from "@ngneat/transloco";
 
 @Component({
   selector: 'biit-vertical-board',
   templateUrl: './vertical-board.component.html',
-  styleUrls: ['./vertical-board.component.scss']
+  styleUrls: ['./vertical-board.component.scss'],
+  providers: [
+    {
+      provide: TRANSLOCO_SCOPE,
+      multi:true,
+      useValue: {scope: 'forms/haw', alias: 'form'}
+    }
+  ],
 })
 export class VerticalBoardComponent implements OnInit {
   @Output() onSubmit: EventEmitter<FormResult> = new EventEmitter();

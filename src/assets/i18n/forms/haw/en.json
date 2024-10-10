@@ -1,3 +1,21 @@
 {
-  "access_denied_permissions": "You don't have permissions to access this resource. If you think this is a mistake, please contact with support team."
+  "feel_strong_and_vigorous": "At my job, I feel strong and vigorous.",
+  "always": "Always",
+  "often": "Often",
+  "sometimes": "Sometimes",
+  "rarely": "Rarely",
+  "never": "Never",
+  "feel_enthusiastic": "I am enthusiastic about my work.",
+  "get_carried_away": "I get carried away when I am working.",
+  "satisfaction_with_nature": "I am satisfied with the nature of the work I perform.",
+  "strongly_agree": "Strongly Agree",
+  "agree": "Agree",
+  "neither_agree_nor_disagree": "Neither agree or disagree",
+  "disagree": "Disagree",
+  "strongly_disagree": "Strongly disagree",
+  "satisfaction_with_pay": "I am satisfied with the pay I receive for my job.",
+  "satisfaction_with_opportunities": "I am satisfied with the opportunities which exists in this organization for advancement.",
+  "career_happiness": "I would be very happy to spend the rest of my career with this organisation.",
+  "emotionally_attached": "I feel emotionally attached to this organisation.",
+  "sense_of_belonging": "I feel a strong sense of belonging to my organisation."
 }

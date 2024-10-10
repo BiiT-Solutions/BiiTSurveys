@@ -36,6 +36,9 @@ registerLocaleData(localeNL, 'nl');
         availableLangs: ['en', 'es', 'nl'],
         defaultLang: 'en',
         fallbackLang: 'en',
+        missingHandler: {
+          useFallbackTranslation: true
+        },
         reRenderOnLangChange: true,
         prodMode: !isDevMode()
       })
