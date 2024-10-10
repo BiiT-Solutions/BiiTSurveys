@@ -16,6 +16,7 @@ import {SessionService} from "../../services/session.service";
 import {Form} from "../../models/form/form";
 import {FormFormatter} from "../../utils/form-formatter";
 import {TRANSLOCO_SCOPE, TranslocoService} from "@ngneat/transloco";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'biit-vertical-board',
@@ -46,16 +47,23 @@ export class VerticalBoardComponent implements OnInit {
   constructor(private surveysService: SurveysService,
               private eventService: EventService,
               private authService: AuthService,
-              private transloco: TranslocoService,
+              private deviceService: DeviceDetectorService,
               biitIconService: BiitIconService) {
     biitIconService.registerIcons(completeIconSet);
   }
 
 
   ngOnInit(): void {
-    const vh = window.innerHeight * 0.01;
-// Then we set the value in the --vh custom property to the root of the document
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    /*This workaround prevent wrong viewport view on phones and tablets browsers*/
+    if (this.deviceService.isMobile() || this.deviceService.isTablet()) {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      window.addEventListener('resize', () => {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      });
+    }
+
     this.checkAuth();
     this.surveysService.getSurvey('HAW').subscribe((response: CompleteFormView): void => {
       this.survey = CompleteFormView.clone(response);
@@ -93,7 +101,7 @@ export class VerticalBoardComponent implements OnInit {
 
   private submit(): void {
     const formResult: FormResult = FormFormatter.getFormResultFromCompleteFormView(this.survey, this.questionsAnswered);
-    const customProperties = new Map<string, string>();
+    const customProperties: Map<string, string> = new Map<string, string>();
     customProperties.set("issuer", SessionService.getUser().username);
     customProperties.set("factType",  "formResult");
     this.eventService.sendEvent(formResult, Form.name, formResult.label, 'SUBMITTED', customProperties, 'form');
