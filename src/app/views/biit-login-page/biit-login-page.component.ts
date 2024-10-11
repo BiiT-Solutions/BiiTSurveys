@@ -13,11 +13,12 @@ import {TRANSLOCO_SCOPE, TranslocoService} from "@ngneat/transloco";
 import {BiitIconService} from "biit-ui/icon";
 import {completeIconSet} from "biit-icons-collection";
 import {SessionService} from "../../services/session.service";
-import {ActivatedRoute, Route, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {LoginRequest, User} from "authorization-services-lib";
 import {AuthService} from "kafka-event-structure-lib";
 import {UserService} from "user-manager-structure-lib";
 import {ErrorHandler} from "biit-ui/utils";
+import {Environment} from "../../../environments/environment";
 
 @Component({
   selector: 'biit-login-page',
@@ -148,4 +149,6 @@ export class BiitLoginPageComponent implements OnInit {
       error: err => ErrorHandler.notify(err, this.translocoService, this.biitSnackbarService)
     });
   }
+
+  protected readonly Environment = Environment;
 }
