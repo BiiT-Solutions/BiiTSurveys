@@ -755,7 +755,7 @@
       "updatedBy" : 10436,
       "name" : "attached",
       "label" : "I feel emotionally attached to this organisation.",
-      "translation" : "emotional_attached",
+      "translation" : "emotionally_attached",
       "originalReference" : "c3187f2c-4c4f-4505-97a7-fc811cf14dc6",
       "hidden" : false,
       "children" : [ {
