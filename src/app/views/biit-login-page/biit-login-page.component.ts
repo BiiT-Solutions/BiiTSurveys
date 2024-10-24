@@ -136,14 +136,10 @@ export class BiitLoginPageComponent implements OnInit {
   }
 
   onSignUp(data: {name: string, lastname: string, email: string, password: string}) {
-    const user = new User();
-    user.name = data.name;
-    user.lastname = data.lastname;
-    user.email = data.email;
-    user.password = data.password;
-    this.userService.createPublic(user).subscribe({
+    const username = data.name[0] + data.lastname + Math.trunc(Math.random()*1000);
+    this.userService.createPublic(data.name, data.lastname, username, data.email, data.password).subscribe({
       next: response => {
-        const login = new BiitLogin(response.username, user.password)
+        const login = new BiitLogin(response.username, data.password);
         this.login(login);
       },
       error: err => ErrorHandler.notify(err, this.translocoService, this.biitSnackbarService)
