@@ -3,6 +3,7 @@ $biit-main: #F20D5E;
 /* You can add global styles to this file, and also import other style files */
 *, *::before, *::after {
   box-sizing: border-box;
+  font-family: Montserrat, "Montserrat", sans-serif;
 }
 
 body {
@@ -66,4 +67,10 @@ body {
   100% {
     background-position: 50px 50px;
   }
+}
+
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }

@@ -99,6 +99,10 @@
               "browserTarget": "biit-surveys:build:development"
             }
           },
+          "options": {
+            "port": 4200,
+            "host": "0.0.0.0"
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
@@ -128,5 +132,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

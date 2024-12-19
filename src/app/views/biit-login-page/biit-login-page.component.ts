@@ -16,6 +16,9 @@ import {SessionService} from "../../services/session.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LoginRequest, User} from "authorization-services-lib";
 import {AuthService} from "kafka-event-structure-lib";
+import {UserService} from "user-manager-structure-lib";
+import {ErrorHandler} from "biit-ui/utils";
+import {Environment} from "../../../environments/environment";
 
 @Component({
   selector: 'biit-login-page',
@@ -36,6 +39,7 @@ export class BiitLoginPageComponent implements OnInit {
   constructor(private authService: AuthService,
               private sessionService: SessionService,
               private biitSnackbarService: BiitSnackbarService,
+              private userService: UserService,
               biitIconService: BiitIconService,
               private activateRoute: ActivatedRoute,
               private router: Router,
@@ -69,7 +73,16 @@ export class BiitLoginPageComponent implements OnInit {
         const expiration: number = +response.headers.get(Constants.HEADERS.EXPIRES);
         this.sessionService.setToken(token, expiration, login.remember, true);
         this.sessionService.setUser(user);
-        this.router.navigate([Constants.PATHS.NCA]);
+
+        this.activateRoute.queryParams.subscribe(params => {
+          if (params[Constants.PATHS.QUERY.REDIRECT] !== undefined) {
+            const routerLink = params[Constants.PATHS.QUERY.REDIRECT];
+            this.router.navigate([routerLink]);
+          } else {
+            this.router.navigate([Constants.PATHS.NCA]);
+          }
+        });
+
         this.waiting = false;
       },
       error: (response: HttpResponse<void>) => {
@@ -107,4 +120,31 @@ export class BiitLoginPageComponent implements OnInit {
     });
   }
 
+  protected onResetPassword(email: string) {
+    this.userService.resetPassword(email).subscribe({
+      next: () => {
+        this.translocoService.selectTranslate('success', {},  {scope: 'biit-ui/login'}).subscribe(msg => {
+          this.biitSnackbarService.showNotification(msg, NotificationType.SUCCESS, null, 5);
+        });
+      },
+      error: () => {
+        this.translocoService.selectTranslate('error', {},  {scope: 'biit-ui/login'}).subscribe(msg => {
+          this.biitSnackbarService.showNotification(msg, NotificationType.ERROR, null, 5);
+        });
+      }
+    })
+  }
+
+  onSignUp(data: {name: string, lastname: string, email: string, password: string}) {
+    const username = data.name[0] + data.lastname + Math.trunc(Math.random()*1000);
+    this.userService.createPublic(data.name, data.lastname, username, data.email, data.password).subscribe({
+      next: response => {
+        const login = new BiitLogin(response.username, data.password);
+        this.login(login);
+      },
+      error: err => ErrorHandler.notify(err, this.translocoService, this.biitSnackbarService)
+    });
+  }
+
+  protected readonly Environment = Environment;
 }

@@ -17,6 +17,7 @@ import {AuthService} from "kafka-event-structure-lib";
 import {BiitIconService} from 'biit-ui/icon';
 import {completeIconSet} from 'biit-icons-collection';
 import {SessionService} from "../../services/session.service";
+import {FormFormatter} from "../../utils/form-formatter";
 
 @Component({
   selector: 'biit-survey-board',
@@ -105,20 +106,7 @@ export class SurveyBoardComponent implements OnInit {
   }
 
   private sendSurvey(): void {
-    const formResult: FormResult = new FormResult();
-    this.setDefaultFormItemValues(formResult);
-    formResult.name = this.survey.name;
-    formResult.label = this.survey.label;
-    formResult.version = 1;
-    formResult.children = this.survey.children.map(category => {
-      const categoryResult: CategoryResult = this.generateItem(category.name, category.label, new CategoryResult());
-      categoryResult.children = this.questionsAnswered
-        .filter(surveyAnswer => category.children.some(questionItem => questionItem.name === surveyAnswer.question.name))
-        .map((answer: SurveyAnswer) => {
-          return this.generateQuestion(answer.question.name, answer.question.label, +answer.answer.name);
-        });
-      return categoryResult;
-    });
+    const formResult: FormResult = FormFormatter.getFormResultFromCompleteFormView(this.survey, this.questionsAnswered);
     const customProperties = new Map<string, string>();
     customProperties.set("issuer", SessionService.getUser().username);
     customProperties.set("factType",  "formResult");
@@ -126,25 +114,5 @@ export class SurveyBoardComponent implements OnInit {
     this.onSubmit.emit(formResult);
   }
 
-  private generateQuestion(name: string, label: string, value: number): QuestionWithValueResult {
-    const questionWithValueResult: QuestionWithValueResult = this.generateItem(name, label, new QuestionWithValueResult());
-    this.setDefaultFormItemValues(questionWithValueResult);
-    questionWithValueResult.values = [value];
-    questionWithValueResult.answerLabels = [];
-    return questionWithValueResult;
-  }
-
-  private setDefaultFormItemValues(formItem: FormItem): void {
-    formItem.comparationId = uuid();
-    formItem.creationTime = new Date();
-    formItem.updateTime = new Date();
-  }
-
-  private generateItem<T extends FormItem>(name: string, label: string, item: T): T {
-    item.name = name;
-    item.label = label;
-    this.setDefaultFormItemValues(item);
-    return item;
-  }
 
 }
