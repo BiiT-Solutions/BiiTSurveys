@@ -168,7 +168,6 @@ export class BiitLoginPageComponent implements OnInit, BiitLoginServiceSupport {
   }
 
   checkUserName(username: string): Promise<boolean> {
-    debugger
     return new Promise<boolean>((resolve, reject) => {
       this.userService.checkUserName(username).subscribe({
         next: () => resolve(false),
