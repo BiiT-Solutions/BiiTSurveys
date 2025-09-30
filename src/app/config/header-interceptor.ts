@@ -7,7 +7,10 @@ import {Injectable} from "@angular/core";
 export class HeaderInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const request: HttpRequest<any> = req.clone({
-      headers: req.headers.append(Constants.HEADERS.AUTHORIZATION, `Bearer ${sessionStorage.getItem(Constants.SESSION_STORAGE.AUTH_TOKEN)}`),
+      headers: req.headers
+        .append(Constants.HEADERS.CACHE_CONTROL, 'no-cache')
+        .append(Constants.HEADERS.PRAGMA, 'no-cache')
+        .append(Constants.HEADERS.AUTHORIZATION, `Bearer ${sessionStorage.getItem(Constants.SESSION_STORAGE.AUTH_TOKEN)}`),
     });
     return next.handle(request);
   }
