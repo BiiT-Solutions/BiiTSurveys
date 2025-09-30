@@ -1,7 +1,7 @@
 <div class="meter">
   <span [style.width.%]="currentQuestion/totalQuestions*100"></span>
 </div>
-<div class="question" [class]="currentQuestion%2 ? 'first-in' : 'first-out'" *ngIf="firstQuestion">
+<div id="questions" class="question" [class]="currentQuestion%2 ? 'first-in' : 'first-out'" *ngIf="firstQuestion">
   <div class="countdown" *ngIf="(currentQuestion%2)">
     <biit-countdown-timer [run]="currentQuestion"></biit-countdown-timer>
   </div>
@@ -14,17 +14,17 @@
   <p>{{secondQuestion.label}}</p>
 </div>
 
-<div class="answer" *ngIf="firstQuestion || secondQuestion">
+<div id="answers" class="answer" *ngIf="firstQuestion || secondQuestion">
   <div *ngFor="let answer of currentAnswers"
        [ngSwitch]="+answer.name"
        class="button" (click)="nextQuestion(answer)">
-    <biit-icon *ngSwitchCase="-1" [name]="'cross_wide'" [pathStyle]="{fill:'#262626'}"></biit-icon>
-    <biit-icon *ngSwitchCase="1" [class.hidden]="currentAnswers.length > 2"
+    <biit-icon id="no" *ngSwitchCase="-1" [name]="'cross_wide'" [pathStyle]="{fill:'#262626'}"></biit-icon>
+    <biit-icon id="yes" *ngSwitchCase="1" [class.hidden]="currentAnswers.length > 2"
                [name]="'thick'" [pathStyle]="{fill:'#f20d5e'}"></biit-icon>
-    <p *ngSwitchCase="1" [class.hidden]="currentAnswers.length === 2">☹️</p>
-    <p *ngSwitchCase="2">🫤</p>
-    <p *ngSwitchCase="3">😐</p>
-    <p *ngSwitchCase="4">🙂</p>
-    <p *ngSwitchCase="5">😄</p>
+    <p id="value1" *ngSwitchCase="1" [class.hidden]="currentAnswers.length === 2">☹️</p>
+    <p id="value2" *ngSwitchCase="2">🫤</p>
+    <p id="value3" *ngSwitchCase="3">😐</p>
+    <p id="value4" *ngSwitchCase="4">🙂</p>
+    <p id="value5" *ngSwitchCase="5">😄</p>
   </div>
 </div>
