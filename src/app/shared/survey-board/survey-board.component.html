@@ -5,13 +5,15 @@
   <div class="countdown" *ngIf="(currentQuestion%2)">
     <biit-countdown-timer [run]="currentQuestion"></biit-countdown-timer>
   </div>
-  <p>{{firstQuestion.label}}</p>
+  <span id="question-text">
+    <p>{{ firstQuestion.label }}</p>
+  </span>
 </div>
 <div class="question" [class]="currentQuestion%2 ? 'second-out' : 'second-in'" *ngIf="secondQuestion">
   <div class="countdown" *ngIf="!(currentQuestion%2)">
     <biit-countdown-timer [run]="currentQuestion"></biit-countdown-timer>
   </div>
-  <p>{{secondQuestion.label}}</p>
+  <p>{{ secondQuestion.label }}</p>
 </div>
 
 <div id="answers" class="answer" *ngIf="firstQuestion || secondQuestion">
