@@ -4,18 +4,14 @@ import {SurveysService} from "../../services/surveys.service";
 import {SurveyItem} from "../../models/survey-item";
 import {Queue} from "../../utils/queue";
 import {SurveyAnswer} from "../../models/survey-answer";
-import {FormItem} from "../../models/form/form-item";
-import {v4 as uuid} from "uuid";
 import {FormResult} from "../../models/form/form-result";
-import {CategoryResult} from "../../models/form/category-result";
-import {QuestionWithValueResult} from "../../models/form/question-with-value-result";
 import {Form} from "../../models/form/form";
 import {EventService} from "../../services/events/event-service";
 import {Constants} from "../constants";
-import {LoginRequest} from "authorization-services-lib";
-import {AuthService} from "kafka-event-structure-lib";
-import {BiitIconService} from 'biit-ui/icon';
-import {completeIconSet} from 'biit-icons-collection';
+import {LoginRequest} from "@biit-solutions/authorization-services";
+import {AuthService} from "@biit-solutions/kafka-event-structure"
+import {BiitIconService} from '@biit-solutions/wizardry-theme/icon';
+import {completeIconSet} from "@biit-solutions/biit-icons-collection";
 import {SessionService} from "../../services/session.service";
 import {FormFormatter} from "../../utils/form-formatter";
 
@@ -109,7 +105,7 @@ export class SurveyBoardComponent implements OnInit {
     const formResult: FormResult = FormFormatter.getFormResultFromCompleteFormView(this.survey, this.questionsAnswered);
     const customProperties = new Map<string, string>();
     customProperties.set("issuer", SessionService.getUser().username);
-    customProperties.set("factType",  "formResult");
+    customProperties.set("factType", "formResult");
     this.eventService.sendEvent(formResult, Form.name, formResult.label, 'SUBMITTED', customProperties, 'form');
     this.onSubmit.emit(formResult);
   }

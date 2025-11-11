@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BiitLogin} from "biit-ui/models";
+import {BiitLogin} from "@biit-solutions/wizardry-theme/models";
 import {Constants} from "../../shared/constants";
 import {HttpResponse} from "@angular/common/http";
 import {
@@ -8,17 +8,17 @@ import {
   BiitSnackbarService,
   BiitSnackbarVerticalPosition,
   NotificationType
-} from "biit-ui/info";
+} from "@biit-solutions/wizardry-theme/info";
 import {TRANSLOCO_SCOPE, TranslocoService} from "@ngneat/transloco";
-import {BiitIconService} from "biit-ui/icon";
-import {completeIconSet} from "biit-icons-collection";
+import {BiitIconService} from "@biit-solutions/wizardry-theme/icon";
+import {completeIconSet} from "@biit-solutions/biit-icons-collection";
 import {SessionService} from "../../services/session.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import {LoginRequest, User} from "authorization-services-lib";
-import {AuthService} from "kafka-event-structure-lib";
+import {LoginRequest, User} from "@biit-solutions/authorization-services";
+import {AuthService} from "@biit-solutions/kafka-event-structure"
 import {UserService, SignupRequestConverter, TeamService} from "user-manager-structure-lib";
-import {ErrorHandler} from "biit-ui/utils";
-import {BiitLoginServiceSupport, SignUpRequest} from "biit-ui/login";
+import {ErrorHandler} from "@biit-solutions/wizardry-theme/utils";
+import {BiitLoginServiceSupport, SignUpRequest} from "@biit-solutions/wizardry-theme/login";
 import {Environment} from "../../../environments/environment";
 import {ItemMap} from "../../models/item-map";
 import {firstValueFrom} from "rxjs";

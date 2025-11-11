@@ -1,7 +1,7 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {Constants} from "../shared/constants";
-import {TokenRenewListener, User} from "authorization-services-lib";
-import {AuthService} from "kafka-event-structure-lib";
+import {TokenRenewListener, User} from "@biit-solutions/authorization-services";
+import {AuthService} from "@biit-solutions/kafka-event-structure"
 
 @Injectable({
   providedIn: 'root'

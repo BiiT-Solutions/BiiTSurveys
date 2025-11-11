@@ -1,6 +1,8 @@
 {
-  "name": "biit-surveys",
+  "name": "@biit-solutions/biit-surveys",
   "version": "0.1.3",
+  "license": "AGPLv3",
+  "author": "BiiT Sourcing Solutions",
   "scripts": {
     "ng": "ng",
     "start": "npm run prepare:translations && ng serve",
@@ -9,11 +11,11 @@
     "prepare:publication": "npm run build && npm run prepare:docs",
     "clean:translations": "del-cli --force ./src/assets/i18n/biit-ui/",
     "prepare:translations": "npm run clean:translations && cpx \"./node_modules/biit-ui/assets/i18n/**/*.json\" \"./src/assets/i18n/biit-ui/\"",
-    "publish": "npm run prepare:publication && npm publish ./dist/biit-surveys",
+    "publish": "npm run prepare:publication && npm publish --access=public ./dist/biit-surveys",
     "watch": "npm run prepare:translations && ng build --output-hashing=all --watch --configuration development",
     "test": "ng test"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "^15.2.0",
     "@angular/common": "^15.2.0",
@@ -24,14 +26,14 @@
     "@angular/platform-browser-dynamic": "^15.2.0",
     "@angular/router": "^15.2.0",
     "@ngneat/transloco": "^4.3.0",
-    "authorization-services-lib": "latest",
-    "biit-icons-collection": "latest",
-    "biit-ui": "latest",
-    "kafka-event-structure-lib": "latest",
+    "@biit-solutions/authorization-services": "latest",
+    "@biit-solutions/biit-icons-collection": "latest",
+    "@biit-solutions/wizardry-theme": "latest",
+    "@biit-solutions/kafka-event-structure": "latest",
+    "@biit-solutions/user-manager-structure": "latest",
     "ngx-device-detector": "^5.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "user-manager-structure-lib": "latest",
     "uuid": "^9.0.0",
     "zone.js": "~0.12.0"
   },
@@ -51,5 +53,9 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "typescript": "~4.9.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BiiT-Solutions/BiiTSurveys.git"
   }
 }

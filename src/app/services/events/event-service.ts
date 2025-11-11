@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Event, EventService as KafkaEventService} from "kafka-event-structure-lib";
+import {Event, EventService as KafkaEventService} from "@biit-solutions/kafka-event-structure"
 import {v4 as uuid} from "uuid";
 
 @Injectable({providedIn: 'root'})

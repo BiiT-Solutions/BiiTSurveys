@@ -12,8 +12,8 @@ import {QuestionWithValueResult} from "../../models/form/question-with-value-res
 import {FormItem} from "../../models/form/form-item";
 import {EventService} from "../../services/events/event-service";
 import {Constants} from "../constants";
-import {LoginRequest} from "authorization-services-lib";
-import {AuthService} from "kafka-event-structure-lib";
+import {LoginRequest} from "@biit-solutions/authorization-services";
+import {AuthService} from "@biit-solutions/kafka-event-structure"
 import {SessionService} from "../../services/session.service";
 
 @Component({

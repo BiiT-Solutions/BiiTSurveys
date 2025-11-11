@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SubmittedComponent } from './submitted.component';
-import {BiitIconModule} from "biit-ui/icon";
-import {BiitButtonModule} from "biit-ui/button";
+import {BiitIconModule} from "@biit-solutions/wizardry-theme/icon";
+import {BiitButtonModule} from "@biit-solutions/wizardry-theme/button";
 
 
 

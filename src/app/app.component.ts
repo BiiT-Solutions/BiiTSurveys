@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import { KafkaEventStructureRootService } from "kafka-event-structure-lib";
+import { KafkaEventStructureRootService } from "@biit-solutions/kafka-event-structure"
 import {Environment} from "../environments/environment";
-import {BiitSnackbarHorizontalPosition, BiitSnackbarService, BiitSnackbarVerticalPosition} from "biit-ui/info";
+import {BiitSnackbarHorizontalPosition, BiitSnackbarService, BiitSnackbarVerticalPosition} from "@biit-solutions/wizardry-theme/info";
 import {TranslocoService} from "@ngneat/transloco";
 import {UserManagerRootService} from "user-manager-structure-lib";
 
