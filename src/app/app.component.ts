@@ -3,7 +3,7 @@ import { KafkaEventStructureRootService } from "@biit-solutions/kafka-event-stru
 import {Environment} from "../environments/environment";
 import {BiitSnackbarHorizontalPosition, BiitSnackbarService, BiitSnackbarVerticalPosition} from "@biit-solutions/wizardry-theme/info";
 import {TranslocoService} from "@ngneat/transloco";
-import {UserManagerRootService} from "user-manager-structure-lib";
+import {UserManagerRootService} from "@biit-solutions/user-manager-structure";
 
 @Component({
   selector: 'app-root',

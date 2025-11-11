@@ -16,7 +16,7 @@ import {SessionService} from "../../services/session.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {LoginRequest, User} from "@biit-solutions/authorization-services";
 import {AuthService} from "@biit-solutions/kafka-event-structure"
-import {UserService, SignupRequestConverter, TeamService} from "user-manager-structure-lib";
+import {UserService, SignupRequestConverter, TeamService} from "@biit-solutions/user-manager-structure";
 import {ErrorHandler} from "@biit-solutions/wizardry-theme/utils";
 import {BiitLoginServiceSupport, SignUpRequest} from "@biit-solutions/wizardry-theme/login";
 import {Environment} from "../../../environments/environment";
